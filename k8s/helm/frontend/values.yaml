@@ -1,0 +1,30 @@
+namespace: three-tier
+
+replicaCount: 1
+
+image:
+  repository: 767828733016.dkr.ecr.ap-south-1.amazonaws.com/frontend
+  tag: 54
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ecr-registry-secret
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  backendUrl: "http://www.msdiean.shop/api"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+
+ingress:
+  enabled: true
+  host: www.msdiean.shop
