@@ -3,7 +3,7 @@ namespace: three-tier
 replicaCount: 1
 
 image:
-  repository: 767828733016.dkr.ecr.ap-south-1.amazonaws.com/backend
+  repository: 755395261332.dkr.ecr.ap-south-2.amazonaws.com/b-end
   tag: 8
   pullPolicy: Always
 
