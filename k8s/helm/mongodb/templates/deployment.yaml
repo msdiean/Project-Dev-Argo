@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.auth.secretName }}
+              key: username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.auth.secretName }}
+              key: password
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongo-storage
+        persistentVolumeClaim:
+          claimName: mongo-volume-claim
