@@ -1,0 +1,35 @@
+namespace: three-tier
+
+replicaCount: 1
+
+image:
+  repository: 767828733016.dkr.ecr.ap-south-1.amazonaws.com/backend
+  tag: "35"
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ecr-registry-secret
+
+service:
+  type: ClusterIP
+  port: 3500
+
+env:
+  mongo:
+    secretName: mongo-sec
+
+probes:
+  liveness:
+    path: /healthz
+    initialDelaySeconds: 5
+    periodSeconds: 5
+
+  readiness:
+    path: /ready
+    initialDelaySeconds: 10
+    periodSeconds: 5
+
+  startup:
+    path: /started
+    periodSeconds: 10
+    failureThreshold: 30
