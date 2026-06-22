@@ -1,0 +1,18 @@
+namespace: three-tier
+
+image:
+  repository: mongo
+  tag: "4.4.6"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  port: 27017
+
+persistence:
+  storageClass: gp2-custom
+  size: 1Gi
+
+auth:
+  secretName: mongo-sec
